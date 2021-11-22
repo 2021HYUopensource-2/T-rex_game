@@ -12,12 +12,12 @@ from modules import *
 
 
 '''main'''
-def main(highest_score):
+def main(highest_score, second_score, third_score):
     # 게임초기화
     pygame.init()
     screen = pygame.display.set_mode(cfg.SCREENSIZE)
-    pygame.display.set_caption('T-Rex Rush —— Charles的皮卡丘')
-    #모든 소리파일 가져오기
+    pygame.display.set_caption('T-Rex Rush —— 오픈소스 2조')
+    # 모든 소리파일 가져오기
     sounds = {}
     for key, value in cfg.AUDIO_PATHS.items():
         sounds[key] = pygame.mixer.Sound(value)
@@ -27,6 +27,8 @@ def main(highest_score):
     score = 0
     score_board = Scoreboard(cfg.IMAGE_PATHS['numbers'], position=(534, 15), bg_color=cfg.BACKGROUND_COLOR)
     highest_score = highest_score
+    second_score = second_score
+    third_score = third_score
     highest_score_board = Scoreboard(cfg.IMAGE_PATHS['numbers'], position=(435, 15), bg_color=cfg.BACKGROUND_COLOR, is_highest=True)
     dino = Dinosaur(cfg.IMAGE_PATHS['dino'])
     ground = Ground(cfg.IMAGE_PATHS['ground'], position=(0, cfg.SCREENSIZE[1]))
@@ -75,7 +77,14 @@ def main(highest_score):
             score += 1
             score = min(score, 99999)
             if score > highest_score:
+                third_score = second_score
+                second_score = highest_score
                 highest_score = score
+            elif score > second_score:
+                third_score = second_score
+                second_score = score
+            elif score > third_score:
+                third_score = score
             if score % 100 == 0:
                 sounds['point'].play()
             if score % 1000 == 0:
@@ -108,14 +117,23 @@ def main(highest_score):
         clock.tick(cfg.FPS)
         # --게임 종료 여부 체크
         if dino.is_dead:
+            score_board.save_rankscore(score)
             break
     # 게임 종료 인터페이스
-    return GameEndInterface(screen, cfg), highest_score
+    return GameEndInterface(screen, cfg), highest_score, second_score, third_score
 
 
 #최종 실행
 if __name__ == '__main__':
     highest_score = 0
+    second_score = 0
+    third_score = 0
+    attempt = 0
     while True:
-        flag, highest_score = main(highest_score)
-        if not flag: break
+        attempt += 1
+        if attempt == 1:
+            flag, highest_score, second_score, third_score = main(highest_score, 0, 0)
+        elif attempt == 2:
+            flag, highest_score, second_score, third_score = main(highest_score, second_score, 0)
+        else:
+            flag, highest_score, second_score, third_score = main(highest_score, second_score, third_score)

@@ -7,6 +7,7 @@ Author:
     Charles的皮卡丘
 '''
 import pygame
+import os
 
 
 '''바닥'''
@@ -58,7 +59,7 @@ class Cloud(pygame.sprite.Sprite):
 
 '''점수판'''
 class Scoreboard(pygame.sprite.Sprite):
-    def __init__(self, imagepath, position, size=(11, 13), is_highest=False, bg_color=None, **kwargs):
+    def __init__(self, imagepath, position, size=(11, 13), is_highest=False, is_second=False, is_third=False, bg_color=None, **kwargs):
         pygame.sprite.Sprite.__init__(self)
         # 그림 가져오기
         self.images = []
@@ -67,17 +68,70 @@ class Scoreboard(pygame.sprite.Sprite):
             self.images.append(pygame.transform.scale(image.subsurface((i*20, 0), (20, 24)), size))
         if is_highest:
             self.image = pygame.Surface((size[0]*8, size[1]))
+        # elif is_second:
+        #     self.image = pygame.Surface((size[0]*8, size[1]))
+        # elif is_third:
+        #     self.image = pygame.Surface((size[0]*8, size[1]))
         else:
             self.image = pygame.Surface((size[0]*5, size[1]))
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         # 몇몇 필요한 변수
         self.is_highest = is_highest
+        self.is_second = is_second
+        self.is_third = is_third
         self.bg_color = bg_color
         self.score = '00000'
+
+
     '''득점 설정'''
     def set(self, score):
         self.score = str(score).zfill(5)
+
+
+    '''ranker board 득점 설정'''
+    def set_ranker(self, highest_score, second_score, third_score):
+        self.highest_score = str(highest_score).zfill(5)
+        self.second_score = str(second_score).zfill(5)
+        self.third_score = str(third_score).zfill(5)
+
+
+    '''1,2,3등 점수 불러오기'''
+    def get_rankscore(self):
+        self.highest_score, self.second_score, self.third_score = 0, 0, 0
+        if os.path.exists("T-rex.txt"):
+            rankFile = open("T-rex.txt", 'r')
+            rankscores = rankFile.readlines()
+            if len(rankscores) >= 1:
+                self.highest_score = int(rankscores[0].strip())
+            if len(rankscores) >= 2:
+                self.second_score = int(rankscores[1].strip())
+            if len(rankscores) >= 3:
+                self.third_score = int(rankscores[2].strip())
+            rankFile.close()
+        return self.highest_score, self.second_score, self.third_score
+
+    
+    '''1,2,3등 점수 저장'''
+    def save_rankscore(self, score):
+        prev_highest_score, prev_second_score, prev_third_score = self.get_rankscore()
+        if score > prev_highest_score:
+            self.third_score = prev_second_score
+            self.second_score = prev_highest_score
+            self.highest_score = score
+        elif score > prev_second_score:
+            self.third_score = prev_second_score
+            self.second_score = score
+        elif score > prev_third_score:
+            self.third_score = score
+        rankscores = [self.highest_score, self.second_score, self.third_score]
+        rankFile = open("T-rex.txt", 'w')
+        for i in range(0,3):
+            rankFile.write(f"{rankscores[i]}\n")
+        rankFile.close()
+
+
+
     '''화면에 그리기'''
     def draw(self, screen):
         self.image.fill(self.bg_color)
