@@ -11,7 +11,7 @@ import pygame
 from ..sprites import Dinosaur
 
 
-'''游戏开始界面'''
+'''게임시작 인터페이스'''
 def GameStartInterface(screen, sounds, cfg):
     dino = Dinosaur(cfg.IMAGE_PATHS['dino'])
     ground = pygame.image.load(cfg.IMAGE_PATHS['ground']).subsurface((0, 0), (83, 19))

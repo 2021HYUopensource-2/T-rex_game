@@ -4,7 +4,7 @@ import os
 
 #화면크기
 SCREENSIZE = (600, 150)
-#FPS
+#FPS(속도)
 FPS = 60
 #오디오 파일 위치
 AUDIO_PATHS = {
@@ -14,6 +14,7 @@ AUDIO_PATHS = {
 }
 #그림 파일 위치
 IMAGE_PATHS = {
+    'apple': os.path.join(os.getcwd(), 'resources/images/apple.png'),
     'cacti': [
         os.path.join(os.getcwd(), 'resources/images/cacti-big.png'),
         os.path.join(os.getcwd(), 'resources/images/cacti-small.png')

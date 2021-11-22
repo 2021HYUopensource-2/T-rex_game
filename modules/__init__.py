@@ -1,3 +1,3 @@
-'''初始化'''
+'''초기화'''
 from .sprites import *
 from .interfaces import *

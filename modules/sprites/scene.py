@@ -9,20 +9,20 @@ Author:
 import pygame
 
 
-'''地板'''
+'''바닥'''
 class Ground(pygame.sprite.Sprite):
     def __init__(self, imagepath, position, **kwargs):
         pygame.sprite.Sprite.__init__(self)
-        # 导入图片
+        # 그림 가져오기
         self.image_0 = pygame.image.load(imagepath)
         self.rect_0 = self.image_0.get_rect()
         self.rect_0.left, self.rect_0.bottom = position
         self.image_1 = pygame.image.load(imagepath)
         self.rect_1 = self.image_1.get_rect()
         self.rect_1.left, self.rect_1.bottom = self.rect_0.right, self.rect_0.bottom
-        # 定义一些必要的参数
+        # 필요한 인자 정의
         self.speed = -10
-    '''更新地板'''
+    '''바닥 업데이트'''
     def update(self):
         self.rect_0.left += self.speed
         self.rect_1.left += self.speed
@@ -30,37 +30,37 @@ class Ground(pygame.sprite.Sprite):
             self.rect_0.left = self.rect_1.right
         if self.rect_1.right < 0:
             self.rect_1.left = self.rect_0.right
-    '''将地板画到屏幕'''
+    '''화면에 바닥 그리기'''
     def draw(self, screen):
         screen.blit(self.image_0, self.rect_0)
         screen.blit(self.image_1, self.rect_1)
 
 
-'''云'''
+'''구름'''
 class Cloud(pygame.sprite.Sprite):
     def __init__(self, imagepath, position, **kwargs):
         pygame.sprite.Sprite.__init__(self)
-        # 导入图片
+        # 그림 가져오기
         self.image = pygame.image.load(imagepath)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
-        # 定义一些必要的参数
+        # 필요한 인자 정의
         self.speed = -1
-    '''将云画到屏幕上'''
+    '''화면에 그림 그리기'''
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-    '''更新云'''
+    '''구름 업데이트'''
     def update(self):
         self.rect = self.rect.move([self.speed, 0])
         if self.rect.right < 0:
             self.kill()
 
 
-'''记分板'''
+'''점수판'''
 class Scoreboard(pygame.sprite.Sprite):
     def __init__(self, imagepath, position, size=(11, 13), is_highest=False, bg_color=None, **kwargs):
         pygame.sprite.Sprite.__init__(self)
-        # 导入图片
+        # 그림 가져오기
         self.images = []
         image = pygame.image.load(imagepath)
         for i in range(12):
@@ -71,14 +71,14 @@ class Scoreboard(pygame.sprite.Sprite):
             self.image = pygame.Surface((size[0]*5, size[1]))
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
-        # 一些必要的变量
+        # 몇몇 필요한 변수
         self.is_highest = is_highest
         self.bg_color = bg_color
         self.score = '00000'
-    '''设置得分'''
+    '''득점 설정'''
     def set(self, score):
         self.score = str(score).zfill(5)
-    '''画到屏幕上'''
+    '''화면에 그리기'''
     def draw(self, screen):
         self.image.fill(self.bg_color)
         for idx, digital in enumerate(list(self.score)):

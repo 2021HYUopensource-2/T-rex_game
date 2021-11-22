@@ -16,7 +16,7 @@ def main(highest_score):
     # 게임초기화
     pygame.init()
     screen = pygame.display.set_mode(cfg.SCREENSIZE)
-    pygame.display.set_caption('T-Rex Rush —— Charles的皮卡丘')
+    pygame.display.set_caption('T-Rex Rush')
     #모든 소리파일 가져오기
     sounds = {}
     for key, value in cfg.AUDIO_PATHS.items():
@@ -33,6 +33,7 @@ def main(highest_score):
     cloud_sprites_group = pygame.sprite.Group()
     cactus_sprites_group = pygame.sprite.Group()
     ptera_sprites_group = pygame.sprite.Group()
+    apple_sprites_group = pygame.sprite.Group()
     add_obstacle_timer = 0
     score_timer = 0
     # 게임 루프
@@ -60,19 +61,23 @@ def main(highest_score):
             random_value = random.randrange(0, 10)
             if random_value >= 5 and random_value <= 7:
                 cactus_sprites_group.add(Cactus(cfg.IMAGE_PATHS['cacti']))
-            else:
+            elif random_value != 1:
                 position_ys = [cfg.SCREENSIZE[1]*0.82, cfg.SCREENSIZE[1]*0.75, cfg.SCREENSIZE[1]*0.60, cfg.SCREENSIZE[1]*0.20]
                 ptera_sprites_group.add(Ptera(cfg.IMAGE_PATHS['ptera'], position=(600, random.choice(position_ys))))
+            else:
+                position_ys = [cfg.SCREENSIZE[1]*0.82, cfg.SCREENSIZE[1]*0.75, cfg.SCREENSIZE[1]*0.6, cfg.SCREENSIZE[1]*0.2]
+                apple_sprites_group.add(Apple(cfg.IMAGE_PATHS['apple'], position=(600, random.choice(position_ys))))
         # --게임 요소 업데이트
         dino.update()
         ground.update()
         cloud_sprites_group.update()
         cactus_sprites_group.update()
         ptera_sprites_group.update()
+        apple_sprites_group.update()
         score_timer += 1
         if score_timer > (cfg.FPS//12):
             score_timer = 0
-            score += 1
+            score += 1 #초당 점수 증감
             score = min(score, 99999)
             if score > highest_score:
                 highest_score = score
@@ -93,12 +98,17 @@ def main(highest_score):
         for item in ptera_sprites_group:
             if pygame.sprite.collide_mask(dino, item):
                 dino.die(sounds)
+        for item in apple_sprites_group:
+            if pygame.sprite.collide_mask(dino, item):
+                score += 8
+            
         # --게임 요소 화면에 그리기
         dino.draw(screen)
         ground.draw(screen)
         cloud_sprites_group.draw(screen)
         cactus_sprites_group.draw(screen)
         ptera_sprites_group.draw(screen)
+        apple_sprites_group.draw(screen)
         score_board.set(score)
         highest_score_board.set(highest_score)
         score_board.draw(screen)

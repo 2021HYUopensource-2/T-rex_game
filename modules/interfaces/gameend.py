@@ -10,7 +10,7 @@ import sys
 import pygame
 
 
-'''游戏结束界面'''
+'''게임 종료 인터페이스'''
 def GameEndInterface(screen, cfg):
     replay_image = pygame.image.load(cfg.IMAGE_PATHS['replay'])
     replay_image = pygame.transform.scale(replay_image, (35, 31))
