@@ -1,18 +1,28 @@
-# Introduction
-https://mp.weixin.qq.com/s/PnvcSBe0Va3GVIodGIjYRg
+# T-rex Game
 
-# Environment
+## 개발 환경
+* Windows 11 64 Bit
+* Python 3.10
+
+## 실행 방법
+* 가상 환경 생성(최초 1회)
 ```
-OS: Windows10
-Python: Python3.5+(have installed necessary dependencies)
+python -m venv venv
 ```
 
-# Usage
+* 가상 환경 활성화
 ```
-Step1:
+.\venv\Script\activate
+```
+
+* 의존 라이브러리 설치(최초 1회)
+```
 pip install -r requirements.txt
-Step2:
-run "python Game7.py"
+```
+
+* 메인 python 파일 실행
+```
+python Game7.py
 ```
 
 # Game Display

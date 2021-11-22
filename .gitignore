@@ -1,0 +1,15 @@
+.idea/
+
+*.pyc
+._.*.pyc
+**/*.pyc
+**/._*.pyc
+
+# 가상 환경 폴더
+venv/
+
+# MacOS 디렉토리 파일
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
