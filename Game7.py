@@ -45,19 +45,23 @@ def main(highest_score):
     #음악구현(1)
     BGM = pygame.mixer.Sound("resources/audios/bgm.mp3")
     BGM_level2 = pygame.mixer.Sound("resources/audios/bgm_level2.mp3")
+    BGM_level3 = pygame.mixer.Sound("resources/audios/bgm_level3.mp3")
     #구현 끝
 
         
     while True:
-        #배경음악 구현(2)
+        #배경음악 구현(2) 0 200 300 500 1000 각각 음악.
         if(score <=5):
             BGM_level2.stop()
             BGM.play(-1)
         if(score >50): # 임의로 100 설정. 합의하에 값 조절.
             BGM.stop()
             BGM_level2.play(-1)
+        if(score >100):
+            BGM_level2.stop()
+            BGM_level3.play(-1)
         #구현 끝
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -130,6 +134,7 @@ def main(highest_score):
         if dino.is_dead:
             BGM.stop()
             BGM_level2.stop()
+            BGM_level3.stop()
             break
         
     # 게임 종료 인터페이스
