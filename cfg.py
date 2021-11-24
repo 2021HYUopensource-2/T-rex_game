@@ -10,7 +10,11 @@ FPS = 60
 AUDIO_PATHS = {
     'die': os.path.join(os.getcwd(), 'resources/audios/die.wav'),
     'jump': os.path.join(os.getcwd(), 'resources/audios/jump.wav'),
-    'point': os.path.join(os.getcwd(), 'resources/audios/point.wav')
+    'point': os.path.join(os.getcwd(), 'resources/audios/point.wav'),
+    'bgm': os.path.join(os.getcwd(), 'resources/audios/bgm.mp3'),
+    'bgm_level2': os.path.join(os.getcwd(), 'resources/audios/bgm_level2.mp3'),
+    'bgm_level3': os.path.join(os.getcwd(), 'resources/audios/bgm_level3.mp3'),
+    'bgm_level4': os.path.join(os.getcwd(), 'resources/audios/bgm_level4.mp3')
 }
 #그림 파일 위치
 IMAGE_PATHS = {
@@ -30,6 +34,6 @@ IMAGE_PATHS = {
     'replay': os.path.join(os.getcwd(), 'resources/images/replay.png')
 }
 #배경색상
-BACKGROUND_COLOR = (0, 235, 235)
+BACKGROUND_COLOR = (235, 235, 235)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

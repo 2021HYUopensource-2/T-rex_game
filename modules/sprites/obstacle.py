@@ -54,7 +54,7 @@ class Ptera(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         # 필요한 변수들 정의
         self.speed = -10
-        self.refresh_rate = 10
+        self.refresh_rate = 11
         self.refresh_counter = 0
     '''화면에 그리기'''
     def draw(self, screen):

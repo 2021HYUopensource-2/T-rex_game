@@ -28,10 +28,10 @@ class Dinosaur(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         # 필요한 변수들 정의
         self.init_position = position
-        self.refresh_rate = 5
+        self.refresh_rate = 2
         self.refresh_counter = 0
-        self.speed = 11.5
-        self.gravity = 0.6
+        self.speed = 13
+        self.gravity = 0.7
         self.is_jumping = False
         self.is_ducking = False
         self.is_dead = False
